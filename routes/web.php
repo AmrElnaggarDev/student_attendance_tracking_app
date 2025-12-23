@@ -5,6 +5,9 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\TwoFactor;
+use App\Livewire\Teacher\Grades\AddGrade;
+use App\Livewire\Teacher\Grades\EditGrade;
+use App\Livewire\Teacher\Grades\GradeList;
 use App\Livewire\Teachers\Students\AddStudent;
 use App\Livewire\Teachers\Students\EditStudent;
 use App\Livewire\Teachers\Students\StudentList;
@@ -24,6 +27,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/student-list', StudentList::class)->name('student.index');
     Route::get('/create/student' , AddStudent::class)->name('student.create');
     Route::get('/edit/student/{id}' , EditStudent::class)->name('student.edit');
+
+    //Grades
+    Route::get('/grade/list', GradeList::class)->name('grade.index');
+    Route::get('/grade/create', AddGrade::class)->name('grade.create');
+    Route::get('/grade/edit/{id}', EditGrade::class)->name('grade.edit');
 });
 
 Route::middleware(['auth'])->group(function () {
