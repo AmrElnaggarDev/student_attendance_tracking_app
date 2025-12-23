@@ -5,6 +5,9 @@ use App\Livewire\Settings\Appearance;
 use App\Livewire\Settings\Password;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\TwoFactor;
+use App\Livewire\Teachers\Students\AddStudent;
+use App\Livewire\Teachers\Students\EditStudent;
+use App\Livewire\Teachers\Students\StudentList;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -15,6 +18,13 @@ Route::get('/', function () {
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified', 'teacher'])
     ->name('teacher.dashboard');
+
+Route::middleware(['auth'])->group(function () {
+    //students
+    Route::get('/student-list', StudentList::class)->name('student.index');
+    Route::get('/create/student' , AddStudent::class)->name('student.create');
+    Route::get('/edit/student/{id}' , EditStudent::class)->name('student.edit');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
