@@ -18,6 +18,7 @@
                 </flux:navlist.group>
                 <flux:navlist.item icon="users"  :href="route('student.index')" :current="request()->routeIs('student.index')" wire:navigate>{{ __('Student Management') }}</flux:navlist.item>
                 <flux:navlist.item icon="bars-3-bottom-left"  :href="route('grade.index')" :current="request()->routeIs('grade.index')" wire:navigate>{{ __('Grade Management') }}</flux:navlist.item>
+                <flux:navlist.item icon="calendar-days"  :href="route('attendance.page')" :current="request()->routeIs('attendance.page')" wire:navigate>{{ __('Attendance Management') }}</flux:navlist.item>
             </flux:navlist>
 
             <flux:spacer />
