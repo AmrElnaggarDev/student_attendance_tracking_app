@@ -7,26 +7,23 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class AttendanceExport implements FromCollection, WithMapping, WithHeadings
+class AutomatedAttendanceReportExporter implements FromCollection, WithHeadings, WithMapping
 {
-    protected $year,$month, $grade;
+    protected $startDate,$endDate;
 
-    public function __construct($year,$month,$grade){
-        $this->year = $year;
-        $this->month = $month;
-        $this->grade = $grade;
+    public function __construct($startDate,$endDate){
+        $this->startDate = $startDate;
+        $this->endDate = $endDate;
     }
     /**
      * @return \Illuminate\Support\Collection
      */
     public function collection()
     {
-        return Attendance::whereYear('date',$this->year)
-            ->whereMonth('date',$this->month)
-            ->whereHas('student', function($query){
-                $query->where('grade_id',$this->grade);
-            })->get();
+
+        return Attendance::whereBetween('date', [$this->startDate, $this->endDate])->get();
     }
+
 
     public function map($row): array
     {
