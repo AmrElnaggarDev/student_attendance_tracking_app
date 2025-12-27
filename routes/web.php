@@ -24,15 +24,7 @@ Route::view('dashboard', 'dashboard')
     ->name('teacher.dashboard');
 
 Route::middleware(['auth'])->group(function () {
-    //students
-    Route::get('/student-list', StudentList::class)->name('student.index');
-    Route::get('/create/student' , AddStudent::class)->name('student.create');
-    Route::get('/edit/student/{id}' , EditStudent::class)->name('student.edit');
 
-    //Grades
-    Route::get('/grade/list', GradeList::class)->name('grade.index');
-    Route::get('/grade/create', AddGrade::class)->name('grade.create');
-    Route::get('/grade/edit/{id}', EditGrade::class)->name('grade.edit');
 
     // Attendances
     Route::get('/attendance', AttendancePage::class)->name('attendance.page');
@@ -59,4 +51,14 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['admin', 'auth'])->group(function () {
     Route::get('/admin/dashboard', AdminDashboard::class)->name('admin.dashboard');
+
+    //students
+    Route::get('/student-list', StudentList::class)->name('student.index');
+    Route::get('/create/student' , AddStudent::class)->name('student.create');
+    Route::get('/edit/student/{id}' , EditStudent::class)->name('student.edit');
+
+    //Grades
+    Route::get('/grade/list', GradeList::class)->name('grade.index');
+    Route::get('/grade/create', AddGrade::class)->name('grade.create');
+    Route::get('/grade/edit/{id}', EditGrade::class)->name('grade.edit');
 });

@@ -20,7 +20,7 @@ class SendAttendanceReportCommand extends Command
         $type = $this->argument('type');
 
         if ($type == 'daily') {
-            $lastAttendance = \App\Models\Attendance::orderBy('date', 'desc')->first();
+            $lastAttendance = Attendance::orderBy('date', 'desc')->first();
 
             if (!$lastAttendance) {
                 $this->info("No attendance data available for daily report.");
@@ -34,12 +34,12 @@ class SendAttendanceReportCommand extends Command
         } elseif ($type == 'weekly') {
             $today = Carbon::today();
 
-            $firstAttendance = \App\Models\Attendance::whereBetween('date', [
+            $firstAttendance = Attendance::whereBetween('date', [
                 $today->copy()->startOfWeek()->toDateString(),
                 $today->copy()->endOfWeek()->toDateString()
             ])->orderBy('date')->first();
 
-            $lastAttendance = \App\Models\Attendance::whereBetween('date', [
+            $lastAttendance = Attendance::whereBetween('date', [
                 $today->copy()->startOfWeek()->toDateString(),
                 $today->copy()->endOfWeek()->toDateString()
             ])->orderBy('date', 'desc')->first();
