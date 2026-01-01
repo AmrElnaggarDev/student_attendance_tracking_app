@@ -15,6 +15,7 @@ class AddStudent extends Component
 {
 
     public $grades = [];
+    public $is_active = true;
     public $gender = '';
 
     public $first_name = '';
@@ -35,6 +36,7 @@ class AddStudent extends Component
             'age' => 'required|integer',
             'grade' => 'required',
             'gender' => 'required|string|in:male,female',
+            'is_active' => 'sometimes|-boolean',
         ]);
 
         Student::create([
@@ -43,6 +45,7 @@ class AddStudent extends Component
             'age' => $this->age,
             'grade_id' => $this->grade,
             'gender' => $this->gender,
+            'is_active' => $this->is_active,
         ]);
 
         $this->reset();

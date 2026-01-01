@@ -103,6 +103,12 @@
                                             Gender
                                         </span>
                                 </th>
+
+                                <th scope="col" class="px-6 py-3 text-start">
+                                        <span class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            Status
+                                        </span>
+                                </th>
                                 <th scope="col" class="px-6 py-3 text-start" colspan="2">
                                         <span
                                             class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
@@ -137,8 +143,35 @@
 
                                     <td class="h-px w-auto whitespace-nowrap">
                                         <div class="px-6 py-2">
-                                            <span class="text-sm text-gray-800 dark:text-neutral-200">{{$student->gender ? ucfirst($student->gender) : '-'}} </span>
-                                            {{-- <span class="text-xs text-gray-500 dark:text-neutral-500">(21.67%)</span> --}}
+                                            @if($student->gender == 'male')
+                                                <span class="inline-flex items-center gap-x-1 py-1 px-2 rounded-lg text-xs font-medium bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-500">
+                                                    <svg class="size-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10"/><path d="M12 2v20"/><path d="m17 12 5-5-5-5"/></svg>
+                                                    Male
+                                                </span>
+                                            @elseif($student->gender == 'female')
+                                                <span class="inline-flex items-center gap-x-1 py-1 px-2 rounded-lg text-xs font-medium bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-500">
+                                                    <svg class="size-3" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 18H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10"/><path d="M12 2v20"/><path d="m17 12 5-5-5-5"/></svg>
+                                                    Female
+                                                </span>
+                                            @else
+                                                <span class="text-sm text-gray-400 dark:text-neutral-500">-</span>
+                                            @endif
+                                        </div>
+                                    </td>
+
+                                    <td class="h-px w-auto whitespace-nowrap">
+                                        <div class="px-6 py-2">
+                                            @if($student->is_active)
+                                                <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-500">
+                                                    <span class="size-1.5 inline-block rounded-full bg-green-800 dark:bg-green-500"></span>
+                                                        Active
+                                                </span>
+                                            @else
+                                                <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-500">
+                                                    <span class="size-1.5 inline-block rounded-full bg-red-800 dark:bg-red-500"></span>
+                                                        Inactive
+                                                    </span>
+                                            @endif
                                         </div>
                                     </td>
 
