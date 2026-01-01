@@ -33,6 +33,24 @@
 
                             </div>
 
+                            <div class="mt-2">
+                                @if($grade_id)
+                                    <button
+                                        wire:click="clearGradeFilter"
+                                        class="inline-flex items-center gap-2 text-sm font-medium px-3 py-1 rounded-full bg-blue-100 text-blue-800 dark:bg-blue-800 dark:text-blue-100 shadow-sm hover:bg-blue-200 dark:hover:bg-blue-700 transition-all duration-200">
+
+                                        <span>Filtering by Grade {{ \App\Models\Grade::find($grade_id)?->name ?? '' }}</span>
+
+                                        <!-- small "X" icon for clear -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                        </svg>
+                                    </button>
+                                @endif
+                            </div>
+
+
+
                             <div>
                                 <div class="inline-flex gap-x-2">
                                     <a class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
