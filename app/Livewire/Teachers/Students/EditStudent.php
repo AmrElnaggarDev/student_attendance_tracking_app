@@ -14,6 +14,7 @@ class EditStudent extends Component
 
     public $grades = [];
 
+    public $gender = '';
     public $first_name = '';
     public $last_name = '';
     public $age = '';
@@ -23,13 +24,14 @@ class EditStudent extends Component
 
     public function mount($id) :void
     {
-        $this->student_details = Student::find($id);
+        $this->student_details = Student::findOrFail($id);
 
         $this->fill([
             'first_name' => $this->student_details->first_name,
             'last_name' => $this->student_details->last_name,
             'age' => $this->student_details->age,
             'grade' => $this->student_details->grade_id,
+            'gender' => $this->student_details->gender,
         ]);
 
         $this->grades = Grade::all();
@@ -42,13 +44,15 @@ class EditStudent extends Component
             'last_name' => 'required|string',
             'age' => 'required|integer',
             'grade' => 'required',
+            'gender' => 'required|string|in:male,female',
         ]);
 
-         Student::find($this->student_details->id)->update([
+         Student::findOrFail($this->student_details->id)->update([
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'age' => $this->age,
             'grade_id' => $this->grade,
+             'gender' => $this->gender,
         ]);
 
          Toaster::success('Student Updated Successfully');

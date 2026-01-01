@@ -61,6 +61,22 @@
                         @enderror
                     </div>
 
+                    <div class="mb-4 sm:mb-8">
+                        <label class="block mb-2 text-sm font-medium dark:text-white">Gender</label>
+                        <select wire:model="gender"
+                                class="py-2.5 sm:py-3 px-4 block w-full border-gray-200 bg-gray-50 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:focus:ring-neutral-600">
+                            <option value="">Select Gender</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+
+                        @error('gender')
+                        <p class="text-red-500 text-xs mt-1">
+                            {{$message}}
+                        </p>
+                        @enderror
+                    </div>
+
                     <div>
                         <label for="hs-feedback-post-comment-textarea-1"
                                class="block mb-2 text-sm font-medium dark:text-white">Grade</label>
