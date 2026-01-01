@@ -17,6 +17,7 @@ class Student extends Model
         'last_name',
         'age',
         'grade_id',
+        'gender',
     ];
 
     public function grade () :BelongsTo
