@@ -15,6 +15,10 @@ class Attendance extends Model
         'reason',
     ];
 
+    protected $casts = [
+        'date' => 'date'
+    ];
+
     public function student () :BelongsTo
     {
         return $this->belongsTo(Student::class);

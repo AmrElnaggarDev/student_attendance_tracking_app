@@ -9,6 +9,7 @@ use App\Livewire\Teacher\Attendance\AttendancePage;
 use App\Livewire\Teacher\Grades\AddGrade;
 use App\Livewire\Teacher\Grades\EditGrade;
 use App\Livewire\Teacher\Grades\GradeList;
+use App\Livewire\Teacher\Students\StudentProfile;
 use App\Livewire\Teachers\Students\AddStudent;
 use App\Livewire\Teachers\Students\EditStudent;
 use App\Livewire\Teachers\Students\StudentList;
@@ -56,6 +57,8 @@ Route::middleware(['admin', 'auth'])->group(function () {
     Route::get('/student-list', StudentList::class)->name('student.index');
     Route::get('/create/student' , AddStudent::class)->name('student.create');
     Route::get('/edit/student/{id}' , EditStudent::class)->name('student.edit');
+
+    Route::get('student/profile/{student}', StudentProfile::class)->name('student.profile');
 
     //Grades
     Route::get('/grade/list', GradeList::class)->name('grade.index');

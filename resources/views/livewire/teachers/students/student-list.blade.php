@@ -121,12 +121,11 @@
                             <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
                             @foreach ($students as $student)
                                 <tr :key="{{ $student->id }}">
-                                    <td class="h-px w-auto whitespace-nowrap">
-                                        <div class="px-6 py-2">
-                                            <span
-                                                class="font-semibold text-sm text-gray-800 dark:text-neutral-200">{{ $student->first_name }} {{ $student->last_name}}</span>
-                                            {{-- <span class="text-xs text-gray-500 dark:text-neutral-500">(23.16%)</span> --}}
-                                        </div>
+                                    <td class="h-px w-auto whitespace-nowrap p-0"> <a href="{{ route('student.profile', $student->id) }}" class="block px-6 py-2 group hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors">
+                                        <span class="font-semibold text-sm text-blue-600 dark:text-blue-400 group-hover:underline">
+                                            {{ $student->first_name }} {{ $student->last_name }}
+                                        </span>
+                                        </a>
                                     </td>
                                     <td class="h-px w-auto whitespace-nowrap">
                                         <div class="px-6 py-2">
