@@ -152,6 +152,114 @@
             </div>
         </div>
 
+        {{-- Filter Toolbar --}}
+        <div
+            class="flex flex-wrap items-center gap-4 px-6 py-4
+           bg-slate-50 border-b border-slate-200
+           shadow-[inset_0_-1px_0_rgba(0,0,0,0.04)]">
+
+            <div class="flex items-center gap-2">
+                <label
+                    class="text-xs font-semibold uppercase tracking-wide text-slate-600 whitespace-nowrap">
+                    From:
+                </label>
+
+                <input
+                    type="date"
+                    wire:model.live="fromDate"
+                    class="w-[160px] rounded-lg border border-slate-300
+                   bg-white px-2 py-1.5 text-sm text-slate-700
+                   focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30
+                   outline-none transition
+                   dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-300">
+            </div>
+
+            <div class="flex items-center gap-2">
+                <label
+                    class="text-xs font-semibold uppercase tracking-wide text-slate-600 whitespace-nowrap">
+                    To:
+                </label>
+
+                <input
+                    type="date"
+                    wire:model.live="toDate"
+                    class="w-[160px] rounded-lg border border-slate-300
+                   bg-white px-2 py-1.5 text-sm text-slate-700
+                   focus:border-blue-500 focus:ring-2 focus:ring-blue-500/30
+                   outline-none transition
+                   dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-300">
+            </div>
+
+
+
+            @if($fromDate || $toDate)
+                <button
+                    wire:click="clearFilter"
+                    class="inline-flex items-center gap-1 rounded-lg
+                   bg-white px-3 py-2 text-sm font-medium
+                   text-slate-600 border border-slate-300
+                   hover:bg-rose-50 hover:text-rose-600 hover:border-rose-300
+                   transition shadow-sm">
+
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                         class="size-4"
+                         fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+
+                    Clear Filter
+                </button>
+            @endif
+
+        </div>
+
+        {{-- Filter Summary --}}
+        @if($fromDate || $toDate)
+            <div
+                class="mx-6 mb-3 flex items-start gap-3 rounded-xl
+               bg-blue-50 px-4 py-3
+               text-sm text-blue-700
+               ring-1 ring-blue-200">
+
+                {{-- Icon --}}
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="mt-0.5 size-4 shrink-0 text-blue-600"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="currentColor">
+                    <path stroke-linecap="round"
+                          stroke-linejoin="round"
+                          stroke-width="2"
+                          d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L14 13.414V19a1 1 0 01-1.447.894l-4-2A1 1 0 018 17V13.414L3.293 6.707A1 1 0 013 6V4z" />
+                </svg>
+
+                {{-- Text --}}
+                <p class="leading-relaxed">
+                    <span class="font-semibold text-blue-800">Filters applied:</span>
+                    @if($fromDate && $toDate)
+                        from
+                        <span class="font-semibold">{{ \Carbon\Carbon::parse($fromDate)->format('M d, Y') }}</span>
+                        to
+                        <span class="font-semibold">{{ \Carbon\Carbon::parse($toDate)->format('M d, Y') }}</span>
+                    @elseif($fromDate)
+                        from
+                        <span class="font-semibold">{{ \Carbon\Carbon::parse($fromDate)->format('M d, Y') }}</span>
+                    @else
+                        until
+                        <span class="font-semibold">{{ \Carbon\Carbon::parse($toDate)->format('M d, Y') }}</span>
+                    @endif
+                </p>
+            </div>
+        @endif
+
+
+
+
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
@@ -198,7 +306,11 @@
                 @empty
                     <tr>
                         <td colspan="3" class="px-6 py-10 text-center text-sm text-gray-500">
-                            No attendance records yet.
+                            @if($fromDate || $toDate)
+                                No records found for the selected date range
+                            @else
+                                No attendance record yet
+                            @endif
                         </td>
                     </tr>
                 @endforelse
