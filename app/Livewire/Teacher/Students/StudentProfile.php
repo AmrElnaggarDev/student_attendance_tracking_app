@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Teacher\Students;
 
+use App\Models\Attendance;
 use App\Models\Student;
+use Carbon\Carbon;
 use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -29,6 +31,8 @@ class StudentProfile extends Component
     {
         $this->resetPage();
     }
+
+
 
     public function clearFilter() :void
     {
