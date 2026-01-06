@@ -9,21 +9,46 @@ use Livewire\WithPagination;
 
 class StudentProfile extends Component
 {
-
-    use withPagination;
+    use WithPagination;
     public Student $student;
+
+    public $fromDate = null;
+    public $toDate = null;
 
     public function mount(Student $student) :void
     {
         $this->student = $student->load('grade');
     }
 
+    public function updatedFromDate() :void
+    {
+        $this->resetPage();
+    }
+
+    public function updatedToDate() :void
+    {
+        $this->resetPage();
+    }
+
+    public function clearFilter() :void
+    {
+        $this->reset(['fromDate', 'toDate']);
+        $this->resetPage();
+    }
+
     public function render() : View
     {
 
-        $attendances = $this->student->attendances()
-            ->orderByDesc('date')
-            ->paginate(10);
+        $query = $this->student->attendances();
+        if ($this->fromDate) {
+            $query->whereDate('date', '>=', $this->fromDate);
+        }
+        if ($this->toDate) {
+            $query->whereDate('date', '<=', $this->toDate);
+        }
+        $attendances = $query->orderByDesc('date')->paginate(10);
+
+
         return view('livewire.teacher.students.student-profile',[
             'student' => $this->student,
             'attendances' => $attendances
