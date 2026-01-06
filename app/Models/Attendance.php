@@ -13,11 +13,22 @@ class Attendance extends Model
         'date',
         'status',
         'reason',
+        'note_type',
     ];
 
     protected $casts = [
         'date' => 'date'
     ];
+
+    public function getNoteColorAttribute() {
+        return match($this->note_type) {
+            'medical' => 'bg-blue-100 text-blue-800',
+            'behavioral' => 'bg-purple-100 text-purple-800',
+            'general' => 'bg-green-100 text-green-800',
+            default => 'bg-gray-100 text-gray-800',
+        };
+    }
+
 
     public function student () :BelongsTo
     {
