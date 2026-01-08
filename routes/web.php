@@ -25,7 +25,7 @@ Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified', 'teacher'])
     ->name('teacher.dashboard');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'teacher'])->group(function () {
 
 
     // Attendances
@@ -51,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('two-factor.show');
 });
 
-Route::middleware(['admin', 'auth'])->group(function () {
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', AdminDashboard::class)->name('admin.dashboard');
 
     //students

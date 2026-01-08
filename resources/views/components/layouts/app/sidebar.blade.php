@@ -12,68 +12,71 @@
                 <x-app-logo />
             </a>
 
-            <flux:navlist variant="outline">
-
-                <flux:navlist.group :heading="__('Platform')" class="grid">
-
-                    <flux:navlist.item
-                        icon="home"
-                        :href="route(auth()->user()->role == 'teacher' ? 'teacher.dashboard' : 'admin.dashboard')"
-                        :current="request()->routeIs(auth()->user()->role == 'teacher' ? 'teacher.dashboard' : 'admin.dashboard')"
-                        wire:navigate
-                    >
-                        {{ __('Dashboard') }}
-                    </flux:navlist.item>
-
-                </flux:navlist.group>
-
-                {{-- Admin only --}}
-                @if(auth()->user()->role === 'admin')
-                    <flux:navlist.item
-                        icon="users"
-                        :href="route('student.index')"
-                        :current="request()->routeIs('student.index')"
-                        wire:navigate
-                    >
-                        {{ __('Student Management') }}
-                    </flux:navlist.item>
-
-                    <flux:navlist.item
-                        icon="bars-3-bottom-left"
-                        :href="route('grade.index')"
-                        :current="request()->routeIs('grade.index')"
-                        wire:navigate
-                    >
-                        {{ __('Grade Management') }}
-                    </flux:navlist.item>
-                @endif
-
-                {{-- Attendance --}}
-                <flux:navlist.item
-                    icon="calendar-days"
-                    :href="route('attendance.page')"
-                    :current="request()->routeIs('attendance.page')"
-                    wire:navigate
-                >
-                    {{ __('Attendance Management') }}
-                </flux:navlist.item>
-
-                {{-- Monthly Report (Admin + Teacher) --}}
-                @if(auth()->user()->role === 'admin' || auth()->user()->role === 'teacher')
-                    <flux:navlist.item
-                        icon="chart-bar"
-                        :href="route('teacher.reports.monthly-attendance')"
-                        :current="request()->routeIs('teacher.reports.monthly-attendance')"
-                        wire:navigate
-                    >
-                        {{ __('Monthly Attendance Report') }}
-                    </flux:navlist.item>
-                @endif
-
-            </flux:navlist>
 
 
-            <flux:spacer />
+                <flux:navlist variant="outline">
+
+                    <flux:navlist.group :heading="__('Platform')" class="grid">
+                        <flux:navlist.item
+                            icon="home"
+                            :href="route(auth()->user()->role === 'teacher' ? 'teacher.dashboard' : 'admin.dashboard')"
+                            :current="request()->routeIs(auth()->user()->role === 'teacher' ? 'teacher.dashboard' : 'admin.dashboard')"
+                            wire:navigate
+                        >
+                            {{ __('Dashboard') }}
+                        </flux:navlist.item>
+                    </flux:navlist.group>
+
+                    {{-- Admin only --}}
+                    @if(auth()->user()->role === 'admin')
+                        <flux:navlist.item
+                            icon="users"
+                            :href="route('student.index')"
+                            :current="request()->routeIs('student.index')"
+                            wire:navigate
+                        >
+                            {{ __('Student Management') }}
+                        </flux:navlist.item>
+
+                        <flux:navlist.item
+                            icon="bars-3-bottom-left"
+                            :href="route('grade.index')"
+                            :current="request()->routeIs('grade.index')"
+                            wire:navigate
+                        >
+                            {{ __('Grade Management') }}
+                        </flux:navlist.item>
+                    @endif
+
+                    {{-- Teacher only --}}
+                    @if(auth()->user()->role === 'teacher')
+                        <flux:navlist.item
+                            icon="calendar-days"
+                            :href="route('attendance.page')"
+                            :current="request()->routeIs('attendance.page')"
+                            wire:navigate
+                        >
+                            {{ __('Attendance Management') }}
+                        </flux:navlist.item>
+                    @endif
+
+                    {{-- Monthly Report (Admin only) --}}
+                    @if(auth()->user()->role === 'admin')
+                        <flux:navlist.item
+                            icon="chart-bar"
+                            :href="route('teacher.reports.monthly-attendance')"
+                            :current="request()->routeIs('teacher.reports.monthly-attendance')"
+                            wire:navigate
+                        >
+                            {{ __('Monthly Attendance Report') }}
+                        </flux:navlist.item>
+                    @endif
+
+                </flux:navlist>
+
+
+
+                <flux:spacer />
 
             <flux:navlist variant="outline">
                 <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit" target="_blank">
