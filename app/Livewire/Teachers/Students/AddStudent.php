@@ -7,12 +7,15 @@ use App\Models\Student;
 use Illuminate\View\View;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 use Masmerise\Toaster\Toaster;
 
 #[Title('Student Attendance | Add Student')]
 
 class AddStudent extends Component
 {
+
+    use WithFileUploads;
 
     public $grades = [];
     public $is_active = true;
@@ -22,6 +25,7 @@ class AddStudent extends Component
     public $last_name = '';
     public $age = '';
     public $grade = '';
+    public $photo = null;
 
     public function mount (): void
     {
@@ -37,7 +41,14 @@ class AddStudent extends Component
             'grade' => 'required',
             'gender' => 'required|string|in:male,female',
             'is_active' => 'sometimes|-boolean',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
+
+        $photo_path = null;
+        if ($this->photo) {
+            // store inside storage/app/public/students
+            $photo_path = $this->photo->store('students', 'public');
+        }
 
         Student::create([
             'first_name' => $this->first_name,
@@ -46,6 +57,7 @@ class AddStudent extends Component
             'grade_id' => $this->grade,
             'gender' => $this->gender,
             'is_active' => $this->is_active,
+            'photo_path' => $photo_path,
         ]);
 
         $this->reset();

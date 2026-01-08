@@ -154,8 +154,20 @@
                     <tr class="group transition-all duration-200 hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-indigo-50/30">
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
-                                <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 text-sm font-bold text-white shadow-lg shadow-blue-500/30">
-                                    {{ strtoupper(substr($row->first_name, 0, 1)) }}{{ strtoupper(substr($row->last_name, 0, 1)) }}
+                                <div class="flex items-center gap-4">
+                                    @if($row->photo_path)
+                                        <img src="{{ asset('storage/' . $row->photo_path) }}"  alt=""  class="h-14 w-14 rounded-xl object-cover" />
+                                    @else
+                                        @php
+                                            $first = $row->first_name ?? '';
+                                            $last = $row->last_name ?? '';
+                                            $initials = strtoupper(mb_substr($first, 0, 1) . mb_substr($last, 0, 1));
+                                        @endphp
+
+                                        <div class="grid size-14 place-items-center rounded-2xl bg-blue-600 text-white font-bold text-lg shadow-sm">
+                                            {{ $initials ?: 'S' }}
+                                        </div>
+                                    @endif
                                 </div>
                                 <span class="text-sm font-bold text-slate-900">
                                     {{ $row->first_name }} {{ $row->last_name }}
