@@ -16,8 +16,12 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::user() && Auth::user()->role != 'admin') {
-            return redirect()->route('teacher.dashboard');
+        if (!$request->user()) {
+            return redirect()->route('login');
+        }
+
+        if ($request->user()->role !== 'admin') {
+            abort(403);
         }
         return $next($request);
     }
