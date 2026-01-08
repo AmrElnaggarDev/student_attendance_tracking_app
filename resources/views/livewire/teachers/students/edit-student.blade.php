@@ -52,7 +52,7 @@
 
                     <div class="mb-4 sm:mb-8">
                         <label for="hs-feedback-post-comment-email-1"
-                               class="block mb-2 text-sm font-medium dark:text-white">Email address</label>
+                               class="block mb-2 text-sm font-medium dark:text-white">Age</label>
                         <input type="number" wire:model="age" id="hs-feedback-post-comment-email-1"
                                class="py-2.5 sm:py-3 px-4 block w-full border-gray-200 bg-gray-50 rounded-lg sm:text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600"
                                placeholder="Enter Age">
@@ -61,7 +61,8 @@
                         @enderror
                     </div>
 
-                    <div class="mb-8 sm:mb-8"> <label class="text-sm">Gender</label>
+                    <div class="mb-8 sm:mb-8">
+                        <label class="text-sm">Gender</label>
                         <select wire:model="gender" class="border rounded-lg px-3 py-2 text-sm w-full">
                             <option value="">Select Gender</option>
                             <option value="male">Male</option>
@@ -75,13 +76,39 @@
                         @enderror
                     </div>
 
+                    <!-- ADD THE PHOTO UPLOAD SECTION HERE -->
+                    <div class="mb-4 sm:mb-8">
+                        <label class="block text-sm font-medium dark:text-white">Student Photo</label>
+                        <input type="file" wire:model="photo"
+                               class="mt-2 block w-full text-sm border-gray-200 bg-gray-50 rounded-lg file:bg-blue-50 file:border-0 file:me-4 file:py-2.5 file:px-4 dark:bg-neutral-800 dark:border-neutral-700 dark:file:bg-neutral-700 dark:text-neutral-400"
+                               accept="image/*">
+                        @error('photo')
+                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
+                        @enderror
+
+                        <div class="mt-3 flex items-center gap-3">
+                            {{-- Preview الجديدة --}}
+                            @if ($photo)
+                                <img src="{{ $photo->temporaryUrl() }}"
+                                     class="h-14 w-14 rounded-xl object-cover ring-2 ring-gray-200 dark:ring-neutral-700" />
+                                {{-- القديمة --}}
+                            @elseif ($student_details->photo_path)
+                                <img src="{{ asset('storage/'.$student_details->photo_path) }}"
+                                     class="h-14 w-14 rounded-xl object-cover ring-2 ring-gray-200 dark:ring-neutral-700" />
+                            @else
+                                <div class="h-14 w-14 rounded-xl bg-gray-100 dark:bg-neutral-800 flex items-center justify-center text-gray-500 dark:text-neutral-500 text-xs">
+                                    No Photo
+                                </div>
+                            @endif
+                        </div>
+                    </div>
                     <div class="mb-4 sm:mb-8">
                         <label for="hs-feedback-post-comment-textarea-1"
                                class="block mb-2 text-sm font-medium dark:text-white">Grade</label>
                         <div class="mt-1">
-                            <select wire:model="grade"
+                            <select wire:model="grade_id"
                                     class="py-3 px-4 pe-9 block w-full border-gray-200 bg-gray-50 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600">
-                                <option selected="">Select Grade</option>
+                                <option value="">Select Grade</option>
                                 @foreach ($grades as $grade)
                                     <option wire:key="{{ $grade->id }}" value="{{ $grade->id }}">{{ $grade->name }}</option>
                                 @endforeach

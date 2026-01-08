@@ -77,6 +77,35 @@
                         @enderror
                     </div>
 
+                    {{-- Student Photo --}}
+                    <div class="space-y-2">
+                        <label class="text-sm font-semibold text-slate-700">Student Photo (optional)</label>
+
+                        <input type="file"
+                               wire:model="photo"
+                               accept="image/*"
+                               class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700
+                  file:mr-4 file:rounded-lg file:border-0 file:bg-slate-100 file:px-4 file:py-2 file:text-sm file:font-semibold
+                  hover:border-blue-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 outline-none transition"/>
+
+                        @error('photo')
+                        <p class="text-sm text-rose-600">{{ $message }}</p>
+                        @enderror
+
+                        {{-- Preview --}}
+                        @if($photo)
+                            <div class="mt-2 flex items-center gap-3">
+                                <img src="{{ $photo->temporaryUrl() }}"
+                                     class="h-16 w-16 rounded-2xl object-cover ring-2 ring-slate-200"/>
+                                <p class="text-sm text-slate-600">Preview</p>
+                            </div>
+                        @endif
+
+                        <div wire:loading wire:target="photo" class="text-sm text-slate-500">
+                            Uploading...
+                        </div>
+                    </div>
+
                     <div class="mb-4 sm:mb-8">
                         <label class="block mb-2 text-sm font-medium dark:text-white">Grade</label>
                         <select wire:model="grade"

@@ -26,11 +26,6 @@
                                     placeholder="Search student..."
                                     class="border rounded-lg px-3 py-2 text-sm"
                                 />
-
-
-
-
-
                             </div>
 
                             <div class="mt-2">
@@ -48,10 +43,6 @@
                                     </button>
                                 @endif
                             </div>
-
-
-
-
 
                             <div>
                                 <div class="inline-flex gap-x-2">
@@ -75,6 +66,14 @@
                             <thead
                                 class="bg-gray-50 divide-y divide-gray-200 dark:bg-neutral-800 dark:divide-neutral-700">
                             <tr>
+                                <th scope="col"
+                                    class="px-6 py-3 text-start border-s border-gray-200 dark:border-neutral-700">
+                                        <span
+                                            class="text-xs font-semibold uppercase text-gray-800 dark:text-neutral-200">
+                                            Photo
+                                        </span>
+                                </th>
+
                                 <th scope="col"
                                     class="px-6 py-3 text-start border-s border-gray-200 dark:border-neutral-700">
                                         <span
@@ -121,25 +120,55 @@
                             <tbody class="divide-y divide-gray-200 dark:divide-neutral-700">
                             @foreach ($students as $student)
                                 <tr :key="{{ $student->id }}">
-                                    <td class="h-px w-auto whitespace-nowrap p-0"> <a href="{{ route('student.profile', $student->id) }}" class="block px-6 py-2 group hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors">
-                                        <span class="font-semibold text-sm text-blue-600 dark:text-blue-400 group-hover:underline">
-                                            {{ $student->first_name }} {{ $student->last_name }}
-                                        </span>
-                                        </a>
-                                    </td>
+                                    <!-- Photo Column -->
                                     <td class="h-px w-auto whitespace-nowrap">
-                                        <div class="px-6 py-2">
-                                            <span class="text-sm text-gray-800 dark:text-neutral-200">{{ $student->grade->name}}</span>
-                                            {{-- <span class="text-xs text-gray-500 dark:text-neutral-500">(24.50%)</span> --}}
-                                        </div>
-                                    </td>
-                                    <td class="h-px w-auto whitespace-nowrap">
-                                        <div class="px-6 py-2">
-                                            <span class="text-sm text-gray-800 dark:text-neutral-200">{{$student->age}} years</span>
-                                            {{-- <span class="text-xs text-gray-500 dark:text-neutral-500">(21.67%)</span> --}}
+                                        <div class="px-6 py-3">
+                                            @php
+                                                $photo = $student->photo_path ?? null;
+                                                $first = $student->first_name ?? '';
+                                                $last  = $student->last_name ?? '';
+                                                $initials = strtoupper(mb_substr($first, 0, 1) . mb_substr($last, 0, 1));
+                                            @endphp
+
+                                            @if($photo)
+                                                <img
+                                                    src="{{ asset('storage/' . $photo) }}"
+                                                    alt="Student Photo"
+                                                    class="h-10 w-10 rounded-xl object-cover ring-2 ring-gray-200 dark:ring-neutral-700 shadow-sm"
+                                                    loading="lazy"
+                                                >
+                                            @else
+                                                <div class="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 text-xs font-bold text-white shadow-sm">
+                                                    {{ $initials ?: 'S' }}
+                                                </div>
+                                            @endif
                                         </div>
                                     </td>
 
+                                    <!-- Student Name Column -->
+                                    <td class="h-px w-auto whitespace-nowrap p-0">
+                                        <a href="{{ route('student.profile', $student->id) }}" class="block px-6 py-2 group hover:bg-gray-50 dark:hover:bg-neutral-800 transition-colors">
+                                            <span class="font-semibold text-sm text-blue-600 dark:text-blue-400 group-hover:underline">
+                                                {{ $student->first_name }} {{ $student->last_name }}
+                                            </span>
+                                        </a>
+                                    </td>
+
+                                    <!-- Grade Column -->
+                                    <td class="h-px w-auto whitespace-nowrap">
+                                        <div class="px-6 py-2">
+                                            <span class="text-sm text-gray-800 dark:text-neutral-200">{{ $student->grade->name}}</span>
+                                        </div>
+                                    </td>
+
+                                    <!-- Age Column -->
+                                    <td class="h-px w-auto whitespace-nowrap">
+                                        <div class="px-6 py-2">
+                                            <span class="text-sm text-gray-800 dark:text-neutral-200">{{$student->age}} years</span>
+                                        </div>
+                                    </td>
+
+                                    <!-- Gender Column -->
                                     <td class="h-px w-auto whitespace-nowrap">
                                         <div class="px-6 py-2">
                                             @if($student->gender == 'male')
@@ -158,6 +187,7 @@
                                         </div>
                                     </td>
 
+                                    <!-- Status Column -->
                                     <td class="h-px w-auto whitespace-nowrap">
                                         <div class="px-6 py-2">
                                             @if($student->is_active)
@@ -174,7 +204,7 @@
                                         </div>
                                     </td>
 
-
+                                    <!-- Edit Action -->
                                     <td class="h-px w-auto whitespace-nowrap">
                                         <a href="/edit/student/{{$student->id}}" class="flex shrink-0 justify-center items-center gap-2 size-9.5 text-sm font-medium rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden focus:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
@@ -182,6 +212,8 @@
                                             </svg>
                                         </a>
                                     </td>
+
+                                    <!-- Delete Action -->
                                     <td>
                                         <button type="button" wire:click="delete({{ $student->id }})" class="flex shrink-0 justify-center items-center gap-2 size-9.5 text-sm font-medium rounded-lg border border-transparent bg-red-500 text-white hover:bg-red-600 focus:outline-hidden focus:bg-red-700 disabled:opacity-50 disabled:pointer-events-none">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -207,29 +239,7 @@
                             </div>
 
                             <div>
-
                                 {{$students->links()}}
-{{--                                <div class="inline-flex gap-x-2">--}}
-{{--                                    <button type="button"--}}
-{{--                                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">--}}
-{{--                                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"--}}
-{{--                                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"--}}
-{{--                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">--}}
-{{--                                            <path d="m15 18-6-6 6-6" />--}}
-{{--                                        </svg>--}}
-{{--                                        Prev--}}
-{{--                                    </button>--}}
-
-{{--                                    <button type="button"--}}
-{{--                                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700">--}}
-{{--                                        Next--}}
-{{--                                        <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"--}}
-{{--                                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"--}}
-{{--                                             stroke-width="2" stroke-linecap="round" stroke-linejoin="round">--}}
-{{--                                            <path d="m9 18 6-6-6-6" />--}}
-{{--                                        </svg>--}}
-{{--                                    </button>--}}
-{{--                                </div>--}}
                             </div>
                         </div>
                         <!-- End Footer -->

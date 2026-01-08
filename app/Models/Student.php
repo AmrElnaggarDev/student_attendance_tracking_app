@@ -19,6 +19,7 @@ class Student extends Model
         'grade_id',
         'gender',
         'is_active',
+        'photo_path',
     ];
 
     protected $casts = [
