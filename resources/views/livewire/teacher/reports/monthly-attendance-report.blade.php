@@ -85,6 +85,19 @@
             </div>
 
             <button
+                wire:click="exportPdf"
+                class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-semibold text-white hover:bg-slate-800 transition
+               disabled:opacity-50 disabled:cursor-not-allowed"
+                @disabled(!($year && $month && $grade_id))
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" class="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M12 16v-8m0 8l-3-3m3 3l3-3M6 20h12a2 2 0 002-2v-4M4 18v-4a2 2 0 012-2" />
+                </svg>
+                Download PDF
+            </button>
+
+            <button
                 wire:click="resetFilters"
                 type="button"
                 class="inline-flex items-center gap-2 rounded-xl border-2 border-slate-300 bg-white px-5 py-2.5 text-sm font-bold text-slate-700 transition-all duration-200 hover:border-slate-400 hover:bg-slate-50 hover:text-slate-900 focus:outline-none focus:ring-4 focus:ring-slate-300/40 shadow-sm hover:shadow-md"

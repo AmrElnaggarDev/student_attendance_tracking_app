@@ -76,7 +76,6 @@
                         @enderror
                     </div>
 
-                    <!-- ADD THE PHOTO UPLOAD SECTION HERE -->
                     <div class="mb-4 sm:mb-8">
                         <label class="block text-sm font-medium dark:text-white">Student Photo</label>
                         <input type="file" wire:model="photo"
@@ -87,11 +86,11 @@
                         @enderror
 
                         <div class="mt-3 flex items-center gap-3">
-                            {{-- Preview الجديدة --}}
+
                             @if ($photo)
                                 <img src="{{ $photo->temporaryUrl() }}"
                                      class="h-14 w-14 rounded-xl object-cover ring-2 ring-gray-200 dark:ring-neutral-700" />
-                                {{-- القديمة --}}
+
                             @elseif ($student_details->photo_path)
                                 <img src="{{ asset('storage/'.$student_details->photo_path) }}"
                                      class="h-14 w-14 rounded-xl object-cover ring-2 ring-gray-200 dark:ring-neutral-700" />
