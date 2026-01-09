@@ -4,6 +4,7 @@ namespace App\Livewire\Teacher\Reports;
 
 use App\Models\Grade;
 use App\Models\Student;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -51,7 +52,6 @@ class MonthlyAttendanceReport extends Component
                 'attendances as absent_count' => fn ($q) =>
                 $q->whereBetween('date', [$start, $end])->where('status', 'absent'),
 
-                // you confirmed sick not late
                 'attendances as sick_count' => fn ($q) =>
                 $q->whereBetween('date', [$start, $end])->where('status', 'sick'),
 
@@ -70,6 +70,32 @@ class MonthlyAttendanceReport extends Component
                 return $student;
             });
     }
+
+    public function exportPdf()
+    {
+        if (!$this->year || !$this->month || !$this->grade_id) {
+        session()->flash('error', 'Please select Year, Month, and Grade first.');
+        return;
+    }
+
+    $rows = $this->reportRows();
+
+    $gradeName = optional(collect($this->grades)->firstWhere('id', $this->grade_id))->name ?? '—';
+    $monthName = \Carbon\Carbon::create(null, $this->month)->format('F');
+
+    $pdf = Pdf::loadView('pdf.monthly-attendance-report', [
+        'rows' => $rows,
+        'year' => $this->year,
+        'monthName' => $monthName,
+        'gradeName' => $gradeName,
+    ])->setPaper('a4', 'portrait');
+
+    $filename = "monthly-attendance-report-{$this->year}-{$this->month}-grade-{$this->grade_id}.pdf";
+
+    return response()->streamDownload(function () use ($pdf) {
+        echo $pdf->output();
+    }, $filename);
+}
 
     protected function rules(): array
     {
