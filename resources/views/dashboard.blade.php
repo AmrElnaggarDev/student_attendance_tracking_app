@@ -2,5 +2,6 @@
     <div class="flex h-full w-full flex-1 flex-col gap-4 rounded-xl">
         <livewire:dashboard-widget-overview />
         <livewire:teacher.dashboard.attendance-stats />
+        <livewire:teacher.dashboard.quick-student-search />
     </div>
 </x-layouts.app>

@@ -15,7 +15,9 @@ class StudentList extends Component
     use WithPagination;
 
 
+
     public $search = '';
+
     #[Url]
     public $grade_id = null;
     public function delete ($id)

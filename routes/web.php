@@ -21,6 +21,11 @@ Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('student/profile/{student}', StudentProfile::class)
+        ->name('student.profile');
+});
+
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified', 'teacher'])
     ->name('teacher.dashboard');
@@ -30,7 +35,11 @@ Route::middleware(['auth', 'teacher'])->group(function () {
 
     // Attendances
     Route::get('/attendance', AttendancePage::class)->name('attendance.page');
+
+
 });
+
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');
@@ -59,8 +68,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/create/student' , AddStudent::class)->name('student.create');
     Route::get('/edit/student/{id}' , EditStudent::class)->name('student.edit');
 
-    // Student Profile
-    Route::get('student/profile/{student}', StudentProfile::class)->name('student.profile');
 
     //Monthly Attendance Report
     Route::get('/teacher/reports/monthly-attendance', MonthlyAttendanceReport::class)
