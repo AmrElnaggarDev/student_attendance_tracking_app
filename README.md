@@ -90,43 +90,43 @@ Login screen with role-based access (Admin / Teacher).
 ### 📊 Dashboard Overview
 Key statistics cards and weekly attendance rate visualization.
 ![Dashboard Cards](docs/screenshots/dataCards.png)
-![Weekly Attendance Rate](docs/screenshots/weeklyAttendanceRate.png)
+![Weekly Attendance Rate](docs/screenshots/weeklyAttendanceRate.PNG)
 
 ---
 
 ### 🗓 Attendance Management
 Daily attendance management with status and note types.
-![Attendance Management](docs/screenshots/Attendance.png)
+![Attendance Management](docs/screenshots/Attendance.PNG)
 
 ---
 
 ### 📈 Monthly Attendance Reports
 Detailed monthly attendance summary with PDF export.
-![Monthly Attendance Report](docs/screenshots/MonthlyAttendanceReport.png)
+![Monthly Attendance Report](docs/screenshots/MonthlyAttendanceReport.PNG)
 
 ---
 
 ### 📉 Monthly Attendance Trends
 Visual chart displaying attendance trends throughout the month.
-![Monthly Attendance Trends](docs/screenshots/MonthlyAttendanceTrends.png)
+![Monthly Attendance Trends](docs/screenshots/MonthlyAttendanceTrends.PNG)
 
 ---
 
 ### 👨‍🎓 Students Management
 Students list with search, status, and actions.
-![Students List](docs/screenshots/StudentsList.png)
+![Students List](docs/screenshots/StudentsList.PNG)
 
 ---
 
 ### ➕ Add Student
 Create a new student with photo upload and grade assignment.
-![Add Student](docs/screenshots/AddStudent.png)
+![Add Student](docs/screenshots/AddStudent.PNG)
 
 ---
 
 ### ⚙️ User Settings
 Profile management and account settings.
-![Settings](docs/screenshots/settings.png)
+![Settings](docs/screenshots/settings.PNG)
 
 ## 🚀 Installation
 
